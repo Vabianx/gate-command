@@ -6,26 +6,48 @@ body {
     margin: 0;
     min-height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
-    background: #0b1118;
-    color: #e8edf2;
+    background: #090f15;
+    color: #e7edf3;
 }
 
 button {
+    width: 100%;
+    min-height: 52px;
+    padding: 13px 16px;
+    border: 1px solid #47617a;
+    border-radius: 9px;
+    background: #1c2b39;
+    color: #ffffff;
     font: inherit;
+    cursor: pointer;
+}
+
+button + button {
+    margin-top: 12px;
+}
+
+button:active {
+    transform: scale(0.99);
+}
+
+button:disabled {
+    opacity: 0.45;
+    cursor: default;
 }
 
 .topbar {
-    padding: 20px;
+    padding: 22px 20px;
     border-bottom: 1px solid #2c3947;
-    background: #111923;
+    background: #101923;
 }
 
 .eyebrow,
-.section-label {
-    margin: 0 0 6px;
-    color: #8fa3b7;
-    font-size: 0.75rem;
-    letter-spacing: 0.12rem;
+.section-label,
+.small-label {
+    margin: 0 0 8px;
+    color: #91a6ba;
+    font-size: 0.76rem;
+    letter-spacing: 0.16rem;
     text-transform: uppercase;
 }
 
@@ -36,8 +58,20 @@ h3 {
 }
 
 h1 {
-    margin-bottom: 16px;
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+h2 {
     font-size: 1.8rem;
+}
+
+h3 {
+    font-size: 1.25rem;
+}
+
+p {
+    line-height: 1.55;
 }
 
 .status {
@@ -47,18 +81,18 @@ h1 {
 }
 
 .status span {
-    padding: 7px 10px;
+    padding: 9px 11px;
     border: 1px solid #314153;
-    border-radius: 6px;
+    border-radius: 7px;
     background: #17222e;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
 }
 
 .app-shell {
     width: 100%;
     max-width: 760px;
     margin: 0 auto;
-    padding: 24px 18px 48px;
+    padding: 28px 18px 50px;
 }
 
 .view {
@@ -70,11 +104,11 @@ h1 {
 }
 
 .card {
-    margin: 18px 0;
-    padding: 18px;
-    border: 1px solid #2f4052;
-    border-radius: 10px;
-    background: #141e29;
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #304256;
+    border-radius: 11px;
+    background: #131e29;
 }
 
 .menu-grid {
@@ -83,29 +117,44 @@ h1 {
     gap: 12px;
 }
 
-button {
-    width: 100%;
-    min-height: 48px;
-    padding: 12px 16px;
-    border: 1px solid #47617a;
-    border-radius: 8px;
-    background: #1d2c3a;
-    color: #ffffff;
-    cursor: pointer;
+.menu-grid button + button {
+    margin-top: 0;
 }
 
-button:active {
-    transform: scale(0.99);
-}
-
-#start-expedition-btn {
-    margin-top: 10px;
-    background: #284c66;
+.primary-button {
+    background: #2b5874;
 }
 
 .back-button {
-    margin-top: 10px;
     background: transparent;
+}
+
+.gate-address {
+    margin: 4px 0 20px;
+    color: #ffffff;
+    font-size: 1.7rem;
+    font-weight: bold;
+    letter-spacing: 0.18rem;
+}
+
+.probe-result {
+    padding: 14px;
+    border: 1px solid #34485b;
+    border-radius: 8px;
+    background: #0e1720;
+}
+
+.probe-result p {
+    margin: 5px 0;
+}
+
+.hidden {
+    display: none;
+}
+
+ul {
+    padding-left: 22px;
+    line-height: 1.8;
 }
 
 @media (min-width: 620px) {
