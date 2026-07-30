@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Gate Command</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <header class="topbar">
@@ -15,13 +18,26 @@
         </div>
 
         <div class="status">
-            <span>Energie: <strong>100</strong></span>
-            <span>Forschung: <strong>0</strong></span>
-            <span>Personal: <strong>4</strong></span>
+            <span>
+                Energie:
+                <strong id="energy-value">100</strong>
+            </span>
+
+            <span>
+                Forschung:
+                <strong id="research-value">0</strong>
+            </span>
+
+            <span>
+                Personal:
+                <strong id="personnel-value">4</strong>
+            </span>
         </div>
     </header>
 
     <main class="app-shell">
+
+        <!-- BASIS -->
 
         <section id="basis-view" class="view active">
             <p class="section-label">Basis</p>
@@ -29,59 +45,91 @@
 
             <div class="card">
                 <h3>Aktueller Status</h3>
-                <p>Keine Expedition aktiv.</p>
-                <button id="start-expedition-btn">
+
+                <p id="base-status">
+                    Keine Expedition aktiv.
+                </p>
+
+                <button id="prepare-expedition-btn" class="primary-button">
                     Expedition vorbereiten
                 </button>
             </div>
 
             <div class="menu-grid">
-                <button class="menu-button" data-view="team-view">
+                <button data-view="team-view">
                     Team
                 </button>
 
-                <button class="menu-button" data-view="research-view">
+                <button data-view="research-view">
                     Forschung
                 </button>
 
-                <button class="menu-button" data-view="archive-view">
+                <button data-view="archive-view">
                     Archiv
                 </button>
             </div>
         </section>
+
+        <!-- TEAM -->
 
         <section id="team-view" class="view">
             <p class="section-label">Personal</p>
             <h2>Teamverwaltung</h2>
 
             <div class="card">
-                <p>Hier wird später das Expeditionsteam zusammengestellt.</p>
+                <h3>SG-1</h3>
+
+                <p>Vier Mitglieder sind einsatzbereit.</p>
+
+                <ul>
+                    <li>Kommandant</li>
+                    <li>Soldat</li>
+                    <li>Wissenschaftler</li>
+                    <li>Sanitäter</li>
+                </ul>
             </div>
 
             <button class="back-button" data-view="basis-view">
                 Zurück zur Basis
             </button>
         </section>
+
+        <!-- FORSCHUNG -->
 
         <section id="research-view" class="view">
             <p class="section-label">Entwicklung</p>
             <h2>Forschung</h2>
 
             <div class="card">
-                <p>Noch keine Forschungsprojekte verfügbar.</p>
+                <h3>Forschungspunkte</h3>
+
+                <p>
+                    Verfügbar:
+                    <strong id="research-page-value">0</strong>
+                </p>
+
+                <p>
+                    Noch keine Forschungsprojekte freigeschaltet.
+                </p>
             </div>
 
             <button class="back-button" data-view="basis-view">
                 Zurück zur Basis
             </button>
         </section>
+
+        <!-- ARCHIV -->
 
         <section id="archive-view" class="view">
             <p class="section-label">Datenbank</p>
             <h2>Archiv</h2>
 
             <div class="card">
-                <p>Noch keine Planeten, Artefakte oder Berichte gespeichert.</p>
+                <h3>Gespeicherte Daten</h3>
+
+                <p id="archive-status">
+                    Noch keine Expedition abgeschlossen.
+                </p>
             </div>
 
             <button class="back-button" data-view="basis-view">
@@ -89,23 +137,72 @@
             </button>
         </section>
 
-        <section id="expedition-view" class="view">
+        <!-- MISSIONSVORBEREITUNG -->
+
+        <section id="gate-view" class="view">
             <p class="section-label">Missionsvorbereitung</p>
-            <h2>Expedition</h2>
+            <h2>Gate-Raum</h2>
 
             <div class="card">
-                <h3>Gate-Adresse</h3>
-                <p>P4X-761</p>
-                <p>Keine Sondendaten vorhanden.</p>
+                <p class="small-label">Zieladresse</p>
+
+                <p class="gate-address">
+                    P4X-761
+                </p>
+
+                <div id="probe-result" class="probe-result">
+                    <p>
+                        Noch keine Sondendaten vorhanden.
+                    </p>
+                </div>
             </div>
 
+            <button id="send-probe-btn">
+                Sonde senden – 5 Energie
+            </button>
+
+            <button id="start-mission-btn" class="primary-button">
+                Expedition starten – 10 Energie
+            </button>
+
             <button class="back-button" data-view="basis-view">
-                Expedition abbrechen
+                Vorbereitung abbrechen
+            </button>
+        </section>
+
+        <!-- EXPEDITION -->
+
+        <section id="expedition-view" class="view">
+            <p class="section-label">Expedition</p>
+            <h2>P4X-761</h2>
+
+            <div class="card">
+                <h3>Verlassene Anlage</h3>
+
+                <p id="mission-text">
+                    Das Team erreicht eine beschädigte außerirdische Anlage.
+                    Im Inneren wird eine schwache Energiesignatur registriert.
+                </p>
+            </div>
+
+            <div id="mission-options">
+                <button id="investigate-btn">
+                    Anlage untersuchen
+                </button>
+
+                <button id="secure-area-btn">
+                    Umgebung absichern
+                </button>
+            </div>
+
+            <button id="return-base-btn" class="primary-button hidden">
+                Zur Basis zurückkehren
             </button>
         </section>
 
     </main>
 
     <script src="app.js"></script>
+
 </body>
 </html>
