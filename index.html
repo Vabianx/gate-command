@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#071018">
 <title>Gate Command</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=0.4">
 </head>
 <body>
 <header>
@@ -25,20 +25,28 @@
     <p id="baseStatus">Keine Expedition aktiv.</p>
     <button id="prepare" class="primary">Expedition vorbereiten</button>
   </article>
+
   <div class="grid">
     <button data-view="team">Team</button>
     <button data-view="lab">Forschung</button>
     <button data-view="archive">Einsatzarchiv</button>
   </div>
+
+  <article>
+    <small>BEKANNTE ZIELE</small>
+    <div id="knownWorlds"></div>
+  </article>
+
   <article>
     <small>LANGZEITFOLGEN</small>
     <div id="worldFlags">Noch keine besonderen Ereignisse protokolliert.</div>
   </article>
+
   <button id="reset" class="danger">Spielstand zurücksetzen</button>
 </section>
 
 <section id="team" class="view">
-  <small>PERSONAL</small><h2>Einsatzteam</h2>
+  <small>PERSONAL</small><h2>Einsatzteam GC-1</h2>
   <div id="teamCards" class="grid"></div>
   <button data-view="base">Zurück zur Basis</button>
 </section>
@@ -61,9 +69,20 @@
 
 <section id="gateView" class="view">
   <small>MISSIONSVORBEREITUNG</small><h2>Gate-Raum</h2>
+
+  <article>
+    <small>ZIELAUSWAHL</small>
+    <div id="destinationList" class="destination-list"></div>
+  </article>
+
   <div class="gateLayout">
     <div id="gate" class="gate">
-      <div class="core"><div class="horizon"></div><p id="gateText">Adresse auswählen</p></div>
+      <div class="metal-ring ring-one"></div>
+      <div class="metal-ring ring-two"></div>
+      <div class="core">
+        <div class="horizon"></div>
+        <p id="gateText">Adresse auswählen</p>
+      </div>
       <button class="glyph g1" data-glyph="1">◈</button>
       <button class="glyph g2" data-glyph="2">⌁</button>
       <button class="glyph g3" data-glyph="3">△</button>
@@ -72,23 +91,29 @@
       <button class="glyph g6" data-glyph="6">⌬</button>
       <button class="glyph g7" data-glyph="7">☼</button>
     </div>
+
     <article>
-      <small>ZIELADRESSE</small><h3>P4X-761</h3>
+      <small>ZIELADRESSE</small>
+      <h3 id="destinationCode">P4X-761</h3>
+      <p id="destinationName" class="muted">Verlassene Tempelanlage</p>
       <div id="slots" class="slots"></div>
       <button id="autoDial">Adresse automatisch anwählen</button>
     </article>
   </div>
+
   <article>
     <small>SONDENDATEN</small>
     <div id="probeData"><p>Noch keine Sondendaten vorhanden.</p></div>
   </article>
+
   <button id="probe">Sonde senden – 5 Energie</button>
   <button id="start" class="primary" disabled>Expedition starten – 10 Energie</button>
   <button data-view="base">Vorbereitung abbrechen</button>
 </section>
 
 <section id="mission" class="view">
-  <small>EXPEDITION <span id="missionNo"></span></small><h2 id="planetName">P4X-761</h2>
+  <small>EXPEDITION <span id="missionNo"></span></small>
+  <h2 id="planetName"></h2>
   <div class="badges"><span id="phase">Erkundung</span><span id="risk">Risiko: unbekannt</span></div>
   <article class="story"><h3 id="sceneTitle"></h3><div id="story"></div></article>
   <div id="choices"></div>
@@ -96,6 +121,6 @@
 </section>
 </main>
 
-<script type="module" src="app.js"></script>
+<script type="module" src="app.js?v=0.4"></script>
 </body>
 </html>
