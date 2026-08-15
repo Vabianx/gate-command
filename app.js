@@ -1,192 +1,51 @@
-const game = {
-    energy: 100,
-    research: 0,
-    personnel: 4,
-    completedMissions: 0,
-    probeUsed: false
-};
-
-const views = document.querySelectorAll(".view");
-const navigationButtons = document.querySelectorAll("[data-view]");
-
-const energyValue = document.getElementById("energy-value");
-const researchValue = document.getElementById("research-value");
-const personnelValue = document.getElementById("personnel-value");
-const researchPageValue = document.getElementById(
-    "research-page-value"
-);
-
-const baseStatus = document.getElementById("base-status");
-const archiveStatus = document.getElementById("archive-status");
-
-const prepareExpeditionButton = document.getElementById(
-    "prepare-expedition-btn"
-);
-
-const sendProbeButton = document.getElementById(
-    "send-probe-btn"
-);
-
-const startMissionButton = document.getElementById(
-    "start-mission-btn"
-);
-
-const investigateButton = document.getElementById(
-    "investigate-btn"
-);
-
-const secureAreaButton = document.getElementById(
-    "secure-area-btn"
-);
-
-const returnBaseButton = document.getElementById(
-    "return-base-btn"
-);
-
-const probeResult = document.getElementById("probe-result");
-const missionText = document.getElementById("mission-text");
-const missionOptions = document.getElementById("mission-options");
-
-function updateInterface() {
-    energyValue.textContent = game.energy;
-    researchValue.textContent = game.research;
-    personnelValue.textContent = game.personnel;
-    researchPageValue.textContent = game.research;
-
-    if (game.completedMissions === 0) {
-        archiveStatus.textContent =
-            "Noch keine Expedition abgeschlossen.";
-    } else {
-        archiveStatus.textContent =
-            `${game.completedMissions} Expedition abgeschlossen. ` +
-            "Planet P4X-761 wurde im Archiv gespeichert.";
-    }
+const KEY="gate-command-save-v2",SEQ=["1","2","3","4","5","6","7"];
+const fresh=()=>({energy:100,research:0,personnel:4,completed:0,archive:[],baseStatus:"Keine Expedition aktiv.",team:[
+{name:"Colonel Arden",role:"Einsatzkommandant",traits:"Pragmatisch, ungeduldig, trocken und sarkastisch."},
+{name:"Dr. Mara Voss",role:"Astrophysikerin",traits:"Analytisch, charismatisch und militärisch diszipliniert."},
+{name:"Dr. Elias Kern",role:"Archäologe und Linguist",traits:"Moralisch, beharrlich und respektvoll gegenüber fremden Kulturen."},
+{name:"Tyrek",role:"Außerirdischer Verbündeter",traits:"Ruhig, loyal und mit schwer zugänglichem Humor."}]});
+let game=load(),selected=[],mission=null;
+const $=id=>document.getElementById(id),views=document.querySelectorAll(".view"),glyphs=document.querySelectorAll(".glyph");
+function load(){try{return {...fresh(),...JSON.parse(localStorage.getItem(KEY)||"{}")}}catch{return fresh()}}
+function save(){localStorage.setItem(KEY,JSON.stringify(game))}
+function show(id){views.forEach(v=>v.classList.remove("active"));$(id).classList.add("active");scrollTo(0,0)}
+function update(){
+ $("energy").textContent=game.energy;$("research").textContent=game.research;$("personnel").textContent=game.personnel;
+ $("baseStatus").textContent=game.baseStatus;$("labValue").textContent=game.research;
+ const pct=Math.min(100,game.research*10);$("barFill").style.width=pct+"%";$("labText").textContent=pct>=100?"Analyse abgeschlossen: Energiematrix entschlüsselt.":"Analyse der Energiematrix: "+pct+" %.";
+ $("teamCards").innerHTML=game.team.map(x=>`<article><small>${x.role}</small><h3>${x.name}</h3><p>${x.traits}</p></article>`).join("");
+ $("archiveList").innerHTML=game.archive.length?game.archive.slice().reverse().map(r=>`<article class="report"><small>EINSATZAKTE ${r.no}</small><h3>${r.title}</h3><p>${r.summary}</p><p class="warning">Unvollständige Informationen: ${r.info}</p><details><summary>Bericht öffnen</summary>${r.log.map(x=>`<p>${x}</p>`).join("")}</details></article>`).join(""):"<article><p>Noch keine Expedition abgeschlossen.</p></article>";
+ save()
 }
-
-function showView(viewId) {
-    views.forEach((view) => {
-        view.classList.remove("active");
-    });
-
-    const targetView = document.getElementById(viewId);
-
-    if (!targetView) {
-        console.error(`Ansicht nicht gefunden: ${viewId}`);
-        return;
-    }
-
-    targetView.classList.add("active");
-    window.scrollTo(0, 0);
+function initSlots(){$("slots").innerHTML=SEQ.map((_,i)=>`<div class="slot" data-slot="${i}">—</div>`).join("")}
+function resetGate(){selected=[];glyphs.forEach(g=>{g.classList.remove("selected");g.disabled=false});$("gate").classList.remove("open");$("gateText").textContent="Adresse auswählen";$("probeData").innerHTML="<p>Noch keine Sondendaten vorhanden.</p>";$("probe").disabled=false;$("probe").textContent="Sonde senden – 5 Energie";$("start").disabled=true;initSlots()}
+function lock(btn){
+ const n=btn.dataset.glyph;if(selected.includes(n))return;
+ if(n!==SEQ[selected.length]){$("gateText").textContent="Symbolfolge ungültig";setTimeout(()=>$("gateText").textContent=`Chevron ${selected.length+1} erwartet`,500);return}
+ selected.push(n);btn.classList.add("selected");btn.disabled=true;const s=document.querySelector(`[data-slot="${selected.length-1}"]`);s.textContent=btn.textContent;s.classList.add("locked");$("gateText").textContent=`Chevron ${selected.length} verriegelt`;
+ if(selected.length===7)setTimeout(()=>{$("gate").classList.add("open");$("gateText").textContent="Verbindung hergestellt";$("start").disabled=false},500)
 }
-
-function resetMission() {
-    game.probeUsed = false;
-
-    probeResult.innerHTML = `
-        <p>Noch keine Sondendaten vorhanden.</p>
-    `;
-
-    sendProbeButton.disabled = false;
-    sendProbeButton.textContent = "Sonde senden – 5 Energie";
-
-    missionText.textContent =
-        "Das Team erreicht eine beschädigte außerirdische Anlage. " +
-        "Im Inneren wird eine schwache Energiesignatur registriert.";
-
-    missionOptions.classList.remove("hidden");
-    returnBaseButton.classList.add("hidden");
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+async function autoDial(){resetGate();$("autoDial").disabled=true;for(const n of SEQ){lock(document.querySelector(`[data-glyph="${n}"]`));await wait(400)}$("autoDial").disabled=false}
+function narration(t){$("story").insertAdjacentHTML("beforeend",`<div class="narration">${t}</div>`)}
+function dialogue(n,t){$("story").insertAdjacentHTML("beforeend",`<div class="dialogue"><b>${n}</b><p>${t}</p></div>`)}
+function choices(list){$("choices").innerHTML="";list.forEach(c=>{const b=document.createElement("button");b.className="choice";b.innerHTML=`<strong>${c.title}</strong><span>${c.effect}</span>`;b.onclick=c.action;$("choices").appendChild(b)})}
+function startMission(){
+ if(game.energy<10)return;game.energy-=10;mission={no:game.completed+1};update();show("mission");$("missionNo").textContent=String(mission.no).padStart(3,"0");$("phase").textContent="Phase: Erkundung";$("risk").textContent="Risiko: niedrig";$("sceneTitle").textContent="Die versiegelte Anlage";$("story").innerHTML="";$("return").classList.add("hidden");
+ narration("Das Team tritt durch das Gate. Dichter Nebel liegt über einer verlassenen Tempelanlage. Eine massive Steintür blockiert den einzigen sichtbaren Zugang.");
+ dialogue("Colonel Arden","Wir verschwenden hier unsere Zeit. Sprengen wir das Ding auf und gut ist.");
+ dialogue("Dr. Elias Kern","Diese Tür ist möglicherweise älter als die gesamte Anlage. Eine Sprengung würde jeden Hinweis auf ihre Erbauer vernichten.");
+ dialogue("Dr. Mara Voss","Die Symbole reagieren auf schwache Energieimpulse. Ich könnte versuchen, die Sequenz zu rekonstruieren.");
+ dialogue("Tyrek","Ich habe diese Zeichen schon gesehen. Damals öffneten sie keine Tür. Sie warnten vor dem, was dahinter lag.");
+ choices([
+ {title:"Die Tür sprengen",effect:"Schneller Zugang · hohes Risiko · mögliche Schäden",action:breach},
+ {title:"Das Kontrollsystem entschlüsseln",effect:"Forschungsgewinn · unbekannte Reaktion",action:decode},
+ {title:"Den Bereich absichern und nach einem zweiten Zugang suchen",effect:"Zusätzliche Informationen · Zeitverlust",action:secure}])
 }
-
-navigationButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-        showView(button.dataset.view);
-    });
-});
-
-prepareExpeditionButton.addEventListener("click", () => {
-    resetMission();
-    showView("gate-view");
-});
-
-sendProbeButton.addEventListener("click", () => {
-    if (game.probeUsed) {
-        return;
-    }
-
-    if (game.energy < 5) {
-        probeResult.innerHTML = `
-            <p>Nicht genügend Energie für den Sondenstart.</p>
-        `;
-        return;
-    }
-
-    game.energy -= 5;
-    game.probeUsed = true;
-
-    probeResult.innerHTML = `
-        <p><strong>Atmosphäre:</strong> atembar</p>
-        <p><strong>Temperatur:</strong> 21 °C</p>
-        <p><strong>Lebenszeichen:</strong> keine eindeutigen Signale</p>
-        <p><strong>Ruinen:</strong> bestätigt</p>
-        <p><strong>Energiesignatur:</strong> schwach</p>
-    `;
-
-    sendProbeButton.disabled = true;
-    sendProbeButton.textContent = "Sondendaten empfangen";
-
-    updateInterface();
-});
-
-startMissionButton.addEventListener("click", () => {
-    if (game.energy < 10) {
-        probeResult.innerHTML = `
-            <p>Nicht genügend Energie für die Expedition.</p>
-        `;
-        return;
-    }
-
-    game.energy -= 10;
-
-    updateInterface();
-    showView("expedition-view");
-});
-
-investigateButton.addEventListener("click", () => {
-    game.research += 3;
-
-    missionText.textContent =
-        "Der Wissenschaftler aktiviert eine beschädigte Konsole. " +
-        "Das Team sichert Daten über eine unbekannte Energiequelle. " +
-        "Die Expedition erhält 3 Forschungspunkte.";
-
-    missionOptions.classList.add("hidden");
-    returnBaseButton.classList.remove("hidden");
-
-    updateInterface();
-});
-
-secureAreaButton.addEventListener("click", () => {
-    game.energy += 2;
-
-    missionText.textContent =
-        "Das Team durchsucht den Außenbereich und findet einen " +
-        "teilweise geladenen Energiekristall. 2 Energie wurden geborgen.";
-
-    missionOptions.classList.add("hidden");
-    returnBaseButton.classList.remove("hidden");
-
-    updateInterface();
-});
-
-returnBaseButton.addEventListener("click", () => {
-    game.completedMissions += 1;
-
-    baseStatus.textContent =
-        "Expedition erfolgreich abgeschlossen. " +
-        "Das Team ist vollständig zurückgekehrt.";
-
-    updateInterface();
-    showView("basis-view");
-});
-
-updateInterface();
+function branch(title,phase,risk,intro,lines,options){$("sceneTitle").textContent=title;$("phase").textContent=phase;$("risk").textContent=risk;$("story").innerHTML="";narration(intro);lines.forEach(x=>dialogue(x[0],x[1]));choices(options)}
+function breach(){branch("Gewaltsamer Zugang","Phase: Eskalation","Risiko: hoch","Die Detonation reißt die Tür aus ihrer Verankerung und aktiviert ein verborgenes Verteidigungssystem.",[["Colonel Arden","Die Tür ist offen. Das mit den roten Lichtern war allerdings nicht Teil des Plans."],["Dr. Mara Voss","Energiespitze im gesamten Komplex. Wir haben höchstens neunzig Sekunden."],["Tyrek","Die Wächter werden erwachen."]],[{title:"Das Relikt bergen",effect:"Forschung +5 · Verletzungsrisiko",action:()=>finish({title:"Relikt unter Beschuss geborgen",summary:"Das Team sicherte ein beschädigtes Relikt und entkam den erwachenden Wächtern.",info:"Wer erschuf die Wächter und warum reagierten sie auf Tyrek?",research:5,energy:0,status:"Expedition abgeschlossen. Dr. Kern wurde leicht verletzt.",text:"Unter schwerem Feuer erreicht das Team das Gate. Hinter ihnen brechen metallische Wächter durch den Nebel.",lines:[["Dr. Elias Kern","Nur damit das festgehalten wird: Ich war gegen die Sprengung."],["Colonel Arden","Und trotzdem haben Sie das Relikt nicht losgelassen. Das nenne ich Teamgeist."]]})},{title:"Sofort zurückziehen",effect:"Keine Verletzten · kaum Erkenntnisse",action:()=>finish({title:"Taktischer Rückzug",summary:"Das Team kehrte ohne Fund zurück. Die Anlage blieb aktiv.",info:"Was befindet sich hinter der zerstörten Tür?",research:1,energy:2,status:"Expedition abgebrochen. Alle Teammitglieder sind zurückgekehrt.",text:"Als das Gate sich schließt, erscheinen große Silhouetten im Eingang der Anlage.",lines:[["Tyrek","Sie haben uns gesehen."],["Colonel Arden","Dann wissen sie wenigstens, an wen sie die Beschwerde richten müssen."]]})}] )}
+function decode(){branch("Die vergessene Sequenz","Phase: Analyse","Risiko: mittel","Voss verbindet eine mobile Energiequelle mit der Tür. Kern erkennt, dass die Symbolfolge eine Warnung beschreibt.",[["Dr. Elias Kern","Wörtlich übersetzt: Wissen bewahren. Träger vernichten."],["Colonel Arden","Erstaunlich unfreundlich für eine Tür."],["Dr. Mara Voss","Das System verlangt eine biologische Signatur."],["Tyrek","Meine Signatur könnte akzeptiert werden. Sie könnte jedoch auch erkannt werden."]],[{title:"Tyreks Signatur verwenden",effect:"Forschung +7 · unbekannte Fraktion wird aufmerksam",action:()=>finish({title:"Archivkammer geöffnet",summary:"Tyreks Signatur öffnete eine versiegelte Kammer mit historischen Aufzeichnungen.",info:"Warum erkannte die Anlage Tyrek als autorisierten Träger?",research:7,energy:0,status:"Expedition erfolgreich. Unbekanntes Signal wurde ausgesendet.",text:"Im Inneren schwebt ein intaktes Datenarchiv. Gleichzeitig sendet die Anlage einen Impuls in den Orbit.",lines:[["Dr. Mara Voss","Wir haben das Archiv. Aber jemand weiß jetzt, dass wir hier sind."],["Tyrek","Nicht irgendjemand."]]})},{title:"Die Verriegelung technisch überbrücken",effect:"Forschung +4 · Energie -2",action:()=>finish({title:"Sicherheitssystem umgangen",summary:"Voss öffnete die Tür und sicherte einen Teil des Archivs.",info:"Welche Daten wurden beim Überbrücken gelöscht?",research:4,energy:-2,status:"Expedition erfolgreich. Energieversorgung belastet.",text:"Die Tür öffnet sich, doch mehrere Datenspeicher verglühen. Ein Kernbestand bleibt erhalten.",lines:[["Colonel Arden","Sie haben eine jahrtausendealte Tür gehackt."],["Dr. Mara Voss","Ich habe sie überzeugt, ihre Standards zu senken."]]})}] )}
+function secure(){branch("Spuren im Nebel","Phase: Aufklärung","Risiko: unbekannt","Hinter dem Nordflügel entdeckt Tyrek frische Spuren. Kurz darauf empfängt Voss ein schwaches menschliches Notsignal.",[["Colonel Arden","Das war vor der Sonde noch nicht da."],["Dr. Mara Voss","Das Signal verwendet eine alte Kennung unseres Kommandos."],["Dr. Elias Kern","Dann war schon einmal jemand von uns hier."],["Tyrek","Oder jemand möchte, dass wir das glauben."]],[{title:"Dem Notsignal folgen",effect:"Verschollenes Einsatzprotokoll · Hinterhalt möglich",action:()=>finish({title:"Geheime Einsatzakte geborgen",summary:"Das Team fand das Protokoll einer unbekannten früheren Expedition.",info:"Wer gehörte zu Einsatzteam 0?",research:3,energy:1,status:"Expedition erfolgreich. Geheime Einsatzakte geborgen.",text:"In einem Schutzraum liegt ein beschädigtes Aufnahmegerät. Die letzte Nachricht lautet: Öffnet die Tür nicht.",lines:[["Dr. Elias Kern","Diese Kennung ist älter als unser Gate-Programm."],["Colonel Arden","Dann hat jemand sehr gründlich etwas vergessen."]]})},{title:"Die Spuren verfolgen",effect:"Unbekannte Beobachter entdecken",action:()=>finish({title:"Fremde Beobachter entdeckt",summary:"Das Team identifizierte getarnte Beobachter und vermied direkten Kontakt.",info:"Warum überwachten die Fremden das Team und die Anlage?",research:2,energy:3,status:"Expedition abgeschlossen. Fremde Präsenz bestätigt.",text:"Für einen Moment bricht die Tarnung mehrerer humanoider Gestalten zusammen. Sie greifen nicht an.",lines:[["Tyrek","Sie wollten nicht gefunden werden."],["Colonel Arden","Dann sind wir quitt."]]})}] )}
+function finish(r){game.research+=r.research;game.energy=Math.max(0,game.energy+r.energy);game.baseStatus=r.status;mission.result=r;$("phase").textContent="Phase: Abschluss";$("risk").textContent="Status: Rückkehr möglich";$("sceneTitle").textContent=r.title;$("story").innerHTML="";narration(r.text);r.lines.forEach(x=>dialogue(x[0],x[1]));$("choices").innerHTML="";$("return").classList.remove("hidden");update()}
+function returnBase(){const r=mission.result;game.archive.push({no:String(mission.no).padStart(3,"0"),title:r.title,summary:r.summary,info:r.info,log:[...$("story").children].map(x=>x.textContent.trim())});game.completed++;mission=null;resetGate();update();show("base")}
+document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>show(b.dataset.view));glyphs.forEach(b=>b.onclick=()=>lock(b));$("prepare").onclick=()=>{resetGate();show("gateView")};$("autoDial").onclick=autoDial;$("probe").onclick=()=>{if(game.energy<5)return;$("probeData").innerHTML="<p><b>Atmosphäre:</b> atembar</p><p><b>Lebenszeichen:</b> uneindeutig</p><p><b>Strukturen:</b> Tempelanlage</p><p><b>Energiesignatur:</b> schwach</p><p class='warning'><b>Warnung:</b> kurzzeitige Signalstörung</p>";game.energy-=5;$("probe").disabled=true;$("probe").textContent="Sondendaten empfangen";update()};$("start").onclick=startMission;$("return").onclick=returnBase;$("reset").onclick=()=>{if(confirm("Den gesamten Spielstand löschen?")){localStorage.removeItem(KEY);game=fresh();resetGate();update();show("base")}};initSlots();update();
