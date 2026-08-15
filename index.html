@@ -30,6 +30,10 @@
     <button data-view="lab">Forschung</button>
     <button data-view="archive">Einsatzarchiv</button>
   </div>
+  <article>
+    <small>LANGZEITFOLGEN</small>
+    <div id="worldFlags">Noch keine besonderen Ereignisse protokolliert.</div>
+  </article>
   <button id="reset" class="danger">Spielstand zurücksetzen</button>
 </section>
 
@@ -74,20 +78,24 @@
       <button id="autoDial">Adresse automatisch anwählen</button>
     </article>
   </div>
-  <article><small>SONDENDATEN</small><div id="probeData"><p>Noch keine Sondendaten vorhanden.</p></div></article>
+  <article>
+    <small>SONDENDATEN</small>
+    <div id="probeData"><p>Noch keine Sondendaten vorhanden.</p></div>
+  </article>
   <button id="probe">Sonde senden – 5 Energie</button>
   <button id="start" class="primary" disabled>Expedition starten – 10 Energie</button>
   <button data-view="base">Vorbereitung abbrechen</button>
 </section>
 
 <section id="mission" class="view">
-  <small>EXPEDITION <span id="missionNo"></span></small><h2>P4X-761</h2>
+  <small>EXPEDITION <span id="missionNo"></span></small><h2 id="planetName">P4X-761</h2>
   <div class="badges"><span id="phase">Erkundung</span><span id="risk">Risiko: unbekannt</span></div>
   <article class="story"><h3 id="sceneTitle"></h3><div id="story"></div></article>
   <div id="choices"></div>
   <button id="return" class="primary hidden">Zur Basis zurückkehren</button>
 </section>
 </main>
-<script src="app.js"></script>
+
+<script type="module" src="app.js"></script>
 </body>
 </html>
