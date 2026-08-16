@@ -1,6 +1,6 @@
 # Gate Command
 
-Aktueller Teststand: **v0.5**
+Aktueller Teststand: **v0.5.1**
 
 Neu in v0.5:
 - sichtbare Build-Version
@@ -15,3 +15,7 @@ Neu in v0.5:
 - Vorgängerprotokoll statt "Team 0"
 
 Alle Dateien können direkt ins Repository-Root hochgeladen werden.
+
+## v0.5.1 Hotfix
+- Cache-Buster für sämtliche ES-Module
+- verhindert Mischbetrieb aus alten und neuen JavaScript-Dateien auf mobilen Browsern

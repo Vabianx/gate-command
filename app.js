@@ -1,5 +1,5 @@
-import{loadGame,saveGame,resetSavedGame}from"./storage.js";import{freshGame,normalizeGame,addWorldFlag,unlockWorld}from"./game.js";import{ADDRESS_SEQUENCE,initSlots}from"./gate.js";import{createMission,getOpening}from"./missions.js";
-const BUILD_VERSION="0.5";let game=loadGame(freshGame,normalizeGame),selected=[],mission=null,probeUsed=false,probeOutcome=null,selectedWorldId=game.unlockedWorldIds[0]||"p4x761";
+import{loadGame,saveGame,resetSavedGame}from"./storage.js?v=0.5.1";import{freshGame,normalizeGame,addWorldFlag,unlockWorld}from"./game.js?v=0.5.1";import{ADDRESS_SEQUENCE,initSlots}from"./gate.js?v=0.5.1";import{createMission,getOpening}from"./missions.js?v=0.5.1";
+const BUILD_VERSION="0.5.1";let game=loadGame(freshGame,normalizeGame),selected=[],mission=null,probeUsed=false,probeOutcome=null,selectedWorldId=game.unlockedWorldIds[0]||"p4x761";
 const $=id=>document.getElementById(id),views=document.querySelectorAll(".view"),glyphs=document.querySelectorAll(".glyph"),worldById=id=>game.worlds.find(w=>w.id===id),selectedWorld=()=>worldById(selectedWorldId);
 function show(id){views.forEach(v=>v.classList.remove("active"));$(id).classList.add("active");scrollTo(0,0)}
 function setGateStatus(text,state="idle"){$("gateStatus").textContent=text;$("gateIndicator").className="status-dot";if(state!=="idle")$("gateIndicator").classList.add(state)}
