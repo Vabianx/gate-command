@@ -5,59 +5,39 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#071018">
 <title>Gate Command</title>
-<link rel="stylesheet" href="style.css?v=0.4">
+<link rel="stylesheet" href="style.css?v=0.5">
 </head>
 <body>
 <header>
-  <div><small>EXPEDITIONSKOMMANDO</small><h1>Gate Command</h1></div>
+  <div>
+    <small>EXPEDITIONSKOMMANDO</small>
+    <div class="title-row"><h1>Gate Command</h1><span class="version-badge">v0.5</span></div>
+  </div>
   <div class="stats">
     <span>Energie <b id="energy">100</b></span>
     <span>Forschung <b id="research">0</b></span>
     <span>Personal <b id="personnel">4</b></span>
   </div>
 </header>
-
 <main>
 <section id="base" class="view active">
   <small>BASIS</small><h2>Operationszentrale</h2>
-  <article>
-    <small>AKTUELLER STATUS</small>
-    <p id="baseStatus">Keine Expedition aktiv.</p>
-    <button id="prepare" class="primary">Expedition vorbereiten</button>
-  </article>
-
-  <div class="grid">
-    <button data-view="team">Team</button>
-    <button data-view="lab">Forschung</button>
-    <button data-view="archive">Einsatzarchiv</button>
-  </div>
-
-  <article>
-    <small>BEKANNTE ZIELE</small>
-    <div id="knownWorlds"></div>
-  </article>
-
-  <article>
-    <small>LANGZEITFOLGEN</small>
-    <div id="worldFlags">Noch keine besonderen Ereignisse protokolliert.</div>
-  </article>
-
+  <article><small>AKTUELLER STATUS</small><p id="baseStatus">Keine Expedition aktiv.</p><button id="prepare" class="primary">Expedition vorbereiten</button></article>
+  <div class="grid"><button data-view="team">Team</button><button data-view="lab">Forschung</button><button data-view="archive">Einsatzarchiv</button></div>
+  <article><small>BEKANNTE ZIELE</small><div id="knownWorlds"></div></article>
+  <article><small>LANGZEITFOLGEN</small><div id="worldFlags">Noch keine besonderen Ereignisse protokolliert.</div></article>
   <button id="reset" class="danger">Spielstand zurücksetzen</button>
 </section>
 
 <section id="team" class="view">
   <small>PERSONAL</small><h2>Einsatzteam GC-1</h2>
-  <div id="teamCards" class="grid"></div>
+  <div id="teamCards" class="team-grid"></div>
   <button data-view="base">Zurück zur Basis</button>
 </section>
 
 <section id="lab" class="view">
   <small>ENTWICKLUNG</small><h2>Forschung</h2>
-  <article>
-    <p class="big" id="labValue">0</p>
-    <div class="bar"><i id="barFill"></i></div>
-    <p id="labText">Noch keine Analyse abgeschlossen.</p>
-  </article>
+  <article><p class="big" id="labValue">0</p><div class="bar"><i id="barFill"></i></div><p id="labText">Noch keine Analyse abgeschlossen.</p></article>
   <button data-view="base">Zurück zur Basis</button>
 </section>
 
@@ -69,58 +49,54 @@
 
 <section id="gateView" class="view">
   <small>MISSIONSVORBEREITUNG</small><h2>Gate-Raum</h2>
+  <article><small>ZIELAUSWAHL</small><div id="destinationList" class="destination-list"></div></article>
 
-  <article>
-    <small>ZIELAUSWAHL</small>
-    <div id="destinationList" class="destination-list"></div>
-  </article>
+  <div class="connection-panel">
+    <div><small>VERBINDUNGSSTATUS</small><strong id="gateStatus">Gate inaktiv</strong></div>
+    <span id="gateIndicator" class="status-dot"></span>
+  </div>
 
   <div class="gateLayout">
-    <div id="gate" class="gate">
-      <div class="metal-ring ring-one"></div>
-      <div class="metal-ring ring-two"></div>
-      <div class="core">
-        <div class="horizon"></div>
-        <p id="gateText">Adresse auswählen</p>
-      </div>
-      <button class="glyph g1" data-glyph="1">◈</button>
-      <button class="glyph g2" data-glyph="2">⌁</button>
-      <button class="glyph g3" data-glyph="3">△</button>
-      <button class="glyph g4" data-glyph="4">✦</button>
-      <button class="glyph g5" data-glyph="5">◇</button>
-      <button class="glyph g6" data-glyph="6">⌬</button>
+    <div id="gate" class="gate" aria-label="Gate">
+      <div class="metal-ring ring-one"></div><div class="metal-ring ring-two"></div>
+      <div class="core"><div class="horizon"></div><div class="core-glow"></div></div>
+      <button class="glyph g1" data-glyph="1">◈</button><button class="glyph g2" data-glyph="2">⌁</button>
+      <button class="glyph g3" data-glyph="3">△</button><button class="glyph g4" data-glyph="4">✦</button>
+      <button class="glyph g5" data-glyph="5">◇</button><button class="glyph g6" data-glyph="6">⌬</button>
       <button class="glyph g7" data-glyph="7">☼</button>
     </div>
-
-    <article>
-      <small>ZIELADRESSE</small>
-      <h3 id="destinationCode">P4X-761</h3>
-      <p id="destinationName" class="muted">Verlassene Tempelanlage</p>
-      <div id="slots" class="slots"></div>
-      <button id="autoDial">Adresse automatisch anwählen</button>
+    <article class="address-panel">
+      <small>ZIELADRESSE</small><h3 id="destinationCode">P4X-761</h3><p id="destinationName" class="muted">Verlassene Tempelanlage</p>
+      <div id="slots" class="slots"></div><button id="autoDial">Adresse automatisch anwählen</button>
     </article>
   </div>
 
-  <article>
-    <small>SONDENDATEN</small>
+  <article class="probe-card">
+    <div class="probe-header">
+      <div><small>SONDENDATEN</small><p class="muted probe-subtitle">Visuelle Telemetrie und Oberflächenanalyse</p></div>
+      <span id="probeSignal" class="signal-label">KEIN SIGNAL</span>
+    </div>
+    <div id="probeVisual" class="probe-visual scan-off">
+      <div class="scan-sky"></div><div class="scan-terrain"></div><div class="scan-structure"></div>
+      <div class="scan-noise"></div><div class="scan-line"></div><div class="scan-corners"></div>
+      <div class="scan-overlay"><span id="scanWorldCode">NO LINK</span><span id="scanQuality">DATA 0%</span></div>
+    </div>
     <div id="probeData"><p>Noch keine Sondendaten vorhanden.</p></div>
   </article>
 
-  <button id="probe">Sonde senden – 5 Energie</button>
-  <button id="start" class="primary" disabled>Expedition starten – 10 Energie</button>
+  <button id="probe">Sonde senden · 5 Energie</button>
+  <button id="start" class="primary" disabled>Expedition starten · 10 Energie</button>
   <button data-view="base">Vorbereitung abbrechen</button>
 </section>
 
 <section id="mission" class="view">
-  <small>EXPEDITION <span id="missionNo"></span></small>
-  <h2 id="planetName"></h2>
+  <small>EXPEDITION <span id="missionNo"></span></small><h2 id="planetName"></h2>
   <div class="badges"><span id="phase">Erkundung</span><span id="risk">Risiko: unbekannt</span></div>
   <article class="story"><h3 id="sceneTitle"></h3><div id="story"></div></article>
-  <div id="choices"></div>
-  <button id="return" class="primary hidden">Zur Basis zurückkehren</button>
+  <div id="choices"></div><button id="return" class="primary hidden">Zur Basis zurückkehren</button>
 </section>
 </main>
-
-<script type="module" src="app.js?v=0.4"></script>
+<footer><span>Gate Command</span><span>Build v0.5</span></footer>
+<script type="module" src="app.js?v=0.5"></script>
 </body>
 </html>
