@@ -1,2 +1,2 @@
-Gate Command v0.5.1
-Build: 0.5.1
+Gate Command v0.5.2
+Build: 0.5.2
