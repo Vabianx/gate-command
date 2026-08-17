@@ -1,1 +1,2 @@
-export const ADDRESS_SEQUENCE=["1","2","3","4","5","6","7"];export function initSlots(container){container.innerHTML=ADDRESS_SEQUENCE.map((_,i)=>`<div class="slot" data-slot="${i}">—</div>`).join("")}
+export const SYMBOLS={diamond:"◇",wave:"⌁",triangle:"△",star:"✦",cube:"⌬",sun:"☼",spire:"◈"};
+export function initSlots(container,address=[]){container.innerHTML=address.map((symbol,i)=>`<div class="slot" data-slot="${i}" data-expected="${symbol}">${SYMBOLS[symbol]||"?"}</div>`).join("")}

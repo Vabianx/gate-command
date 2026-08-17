@@ -26,3 +26,13 @@ button:active{transform:scale(.99)}button:disabled{opacity:.45;cursor:default}.p
 footer{display:flex;justify-content:space-between;max-width:880px;margin:0 auto;padding:0 16px 28px;color:#607887;font-size:.72rem;letter-spacing:.05rem}
 @keyframes pulse{to{filter:brightness(1.35) saturate(1.25)}}@keyframes rotateRing{to{transform:rotate(360deg)}}@keyframes chevronLock{0%{filter:brightness(2.2);transform:translate(-50%,-50%) scale(1.18)}100%{filter:brightness(1);transform:translate(-50%,-50%) scale(1)}}@keyframes scanMove{from{top:0}to{top:100%}}@keyframes signalJitter{0%,100%{transform:translate(0)}25%{transform:translate(2px,-1px)}75%{transform:translate(-2px,1px)}}
 @media(min-width:680px){header{display:flex;justify-content:space-between;align-items:end}.title-row{margin-bottom:0}.grid{grid-template-columns:repeat(3,1fr)}.team-grid{grid-template-columns:repeat(2,1fr)}.gateLayout{grid-template-columns:1.2fr .8fr;align-items:center}.probe-visual{height:260px}}
+
+.mini{font-size:.82rem;line-height:1.35}
+.probe-card #probeVisual{display:block!important;min-height:230px}
+.scan-object{position:absolute;left:16%;bottom:28%;width:19%;height:18%;border:2px solid #7feeff55;border-radius:50%;box-shadow:0 0 24px #7feeff33}
+.probe-visual.world-moon .scan-sky{background:linear-gradient(#53606e,#1c2d38 53%,#0b151b)}
+.probe-visual.world-moon .scan-terrain{background:linear-gradient(150deg,transparent 0 14%,#53616b 15% 24%,#1e3542 25% 50%,#071018 51% 100%)}
+.probe-visual.world-moon .scan-structure{left:62%;bottom:20%;height:42%;width:12%;clip-path:polygon(35% 0,65% 0,100% 100%,0 100%)}
+.glyph.wrong{border-color:#ff9a9a;background:#5a2424;box-shadow:0 0 20px #ff7070}
+.stats{row-gap:10px}
+@media(max-width:520px){h1{font-size:2.45rem}.stats span{font-size:.92rem}.story{min-height:0}.narration,.dialogue{font-size:.95rem}.probe-visual{height:235px!important}}
