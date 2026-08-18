@@ -1,23 +1,20 @@
-# Gate Command v0.5.5
+# Gate Command v0.5.6
 
 Fokus dieses Builds:
 
-- Hauptseite aufgeräumt
-- Button umbenannt zu "Gate-Raum betreten"
-- keine komplette Adressliste mehr auf der Startseite
-- Adressauswahl im Gate-Raum als Dropdown
-- Sonde erst nach erfolgreicher Gate-Verbindung
-- Ausrüstungswahl erst nach Sondenscan sichtbar
-- Startausrüstung reduziert auf Scanner, Übersetzungsmodul und Medkit
-- Fraktionsarchiv ohne Spoiler, solange kein Kontakt stattgefunden hat
-- Laborprojekte nur sichtbar, wenn dafür echte Hinweise oder Funde vorliegen
-- Zweiter Ausrüstungsslot erst für sehr spätere Progression vorbereitet
-- Missionen auf PX-761 und PX-204 länger und mehrstufig aufgebaut
-- Stil stärker mit goldenen und pharaonisch anmutenden Akzenten versehen
+- Startbutton umbenannt zu "Mission vorbereiten"
+- Dashboard-Kacheln auf Mobilgeräten als 2x2 Raster
+- Menübuttons auf Mobilgeräten als kompaktes 2-Spalten-Raster
+- Gate-Glyphen auf 16 Symbole erweitert
+- Zieladresse nutzt weiterhin 7 Glyphen, aber aus einem größeren Symbolpool
+- Glyphen wackeln nicht mehr beim Antippen
+- Gate-Horizont hat wieder eine klarere Aktiv-Animation
+- Inaktive Sondendaten zeigen kein falsches Weltbild mehr
+- "Auswahl zurücksetzen" ersetzt durch "Gate-Verbindung abbrechen"
+- Abbruchbutton sitzt jetzt beim Verbindungsstatus
+- Adressslots bleiben auch mobil in einer geraden 7er-Reihe
+- kleinere Buttons und kompaktere Karten auf der Startseite
 
-Später vorgesehen:
+Hinweis zur Stargate-Logik:
 
-- nicht atembare Planeten mit spezieller Ausrüstung
-- weitere Fraktionssysteme
-- noch tiefere Rätsel- und Episodenstruktur
-- Basisangriffe, Gefangenschaft und spätere Großereignisse
+Eine Adresse besteht typischerweise aus 7 angewählten Symbolen. Der Ring selbst hat aber deutlich mehr Symbole. Unser Prototyp nutzt deshalb aktuell 16 Symbole als spielbare, mobile Lesbarkeits-Version. Später können daraus 32 oder mehr werden.

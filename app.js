@@ -1,7 +1,7 @@
-import {loadGame, saveGame, resetSavedGame} from "./storage.js?v=0.5.5";
-import {SYMBOLS, TEAM, WORLDS, EQUIPMENT, FIND_CATEGORIES, FACTIONS} from "./data.js?v=0.5.5";
+import {loadGame, saveGame, resetSavedGame} from "./storage.js?v=0.5.6";
+import {SYMBOLS, TEAM, WORLDS, EQUIPMENT, FIND_CATEGORIES, FACTIONS} from "./data.js?v=0.5.6";
 
-const BUILD_VERSION = "0.5.5";
+const BUILD_VERSION = "0.5.6";
 const $ = id => document.getElementById(id);
 const views = document.querySelectorAll(".view");
 const glyphs = document.querySelectorAll(".glyph");
@@ -241,7 +241,7 @@ function renderGateRegister() {
   else status += ` Keine Einsatzdaten vorhanden.`;
   if (selectedWorld().lockedText) status += ` ${selectedWorld().lockedText}`;
   $("destinationStatus").textContent = status;
-  $("scanWorldCode").textContent = selectedWorld().code;
+  $("scanWorldCode").textContent = probeUsed ? selectedWorld().code : "NO LINK";
 }
 
 function renderDestinationMeta() {
@@ -315,7 +315,7 @@ function lockGlyph(btn) {
   if (selected.includes(symbol) || gateOpen) return;
   if (symbol !== address[selected.length]) {
     btn.classList.add("wrong");
-    setGateStatus(`Falsches Symbol · erwartet ${SYMBOLS[address[selected.length]]}`, "error");
+    setGateStatus(`Glyph nicht in Sequenz · erwartet ${SYMBOLS[address[selected.length]]}`, "error");
     setTimeout(() => btn.classList.remove("wrong"), 500);
     return;
   }
@@ -793,7 +793,7 @@ $("destinationSelect").addEventListener("change", e => {
   resetGate(false);
   saveGame(game);
 });
-$("refreshAddress").onclick = () => resetGate(false);
+$("abortDial").onclick = () => resetGate(false);
 document.querySelectorAll("[data-view]").forEach(btn => btn.onclick = () => show(btn.dataset.view));
 glyphs.forEach(btn => btn.onclick = () => lockGlyph(btn));
 $("prepare").onclick = () => { resetGate(false); show("gateView"); };
