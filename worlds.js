@@ -1,6 +1,3 @@
-export const WORLDS=[
-{id:"px761",code:"PX-761",name:"Verlassene Tempelanlage",scanClass:"world-temple",address:["spire","sun","diamond","triangle","star","cube","wave"],probe:{atmosphere:"atembar",temperature:"11 °C",life:"uneindeutig",structures:"große Tempelanlage",energy:"schwach, aber stabil"},rewards:{materials:[2,5],research:[1,3]}},
-{id:"px204",code:"PX-204",name:"Tal der schwarzen Sonne",scanClass:"world-valley",address:["diamond","wave","triangle","star","cube","sun","spire"],probe:{atmosphere:"atembar",temperature:"29 °C",life:"mehrere Signaturen",structures:"Siedlung und fremdes Fluggerät",energy:"periodisch"},rewards:{materials:[3,7],research:[2,4]}},
-{id:"px118",code:"PX-118",name:"Eisarchiv",scanClass:"world-ice",address:["sun","triangle","cube","wave","spire","diamond","star"],probe:{atmosphere:"dünn, aber atembar",temperature:"-18 °C",life:"keine eindeutigen Signale",structures:"unterirdische Anlage",energy:"stark unter der Oberfläche"},rewards:{materials:[1,4],research:[3,6]}},
-{id:"px392",code:"PX-392",name:"Mondruinen am Flutmeer",scanClass:"world-moon",address:["cube","diamond","sun","star","wave","triangle","spire"],probe:{atmosphere:"salzig, atembar",temperature:"17 °C",life:"schwach unter der Oberfläche",structures:"überflutete Ruinen",energy:"flackernd"},rewards:{materials:[4,8],research:[1,3]}}
-];
+// Gate Command v0.5.4
+// Compatibility placeholder. Active code is in app.js, data.js and storage.js.
+export const VERSION='0.5.4';

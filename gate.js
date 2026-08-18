@@ -1,2 +1,3 @@
-export const SYMBOLS={diamond:"◇",wave:"⌁",triangle:"△",star:"✦",cube:"⌬",sun:"☼",spire:"◈"};
-export function initSlots(container,address=[]){container.innerHTML=address.map((symbol,i)=>`<div class="slot" data-slot="${i}" data-expected="${symbol}">${SYMBOLS[symbol]||"?"}</div>`).join("")}
+// Gate Command v0.5.4
+// Compatibility placeholder. Active code is in app.js, data.js and storage.js.
+export const VERSION='0.5.4';

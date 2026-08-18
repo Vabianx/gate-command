@@ -1,33 +1,33 @@
-# Gate Command
+# Gate Command v0.5.4
 
-Aktueller Teststand: **v0.5.3**
+System-Build.
 
-Neu in v0.5:
-- sichtbare Build-Version
-- persistenter Spielstand mit Übernahme aus v0.4
-- Gate-Verbindungsstatus außerhalb des Gate-Zentrums
-- stärkere Gate- und Chevron-Inszenierung
-- visueller Sondenscan mit Weltprofilen und Signalstörungen
-- lebendigere Dialoge
-- Handlungsentscheidungen statt Figuren-Auswahl
-- Einsatzarchiv und unvollständige Informationen
-- mehrere freischaltbare Welten
-- Vorgängerprotokoll statt "Team 0"
+## Schwerpunkt
 
-Alle Dateien können direkt ins Repository-Root hochgeladen werden.
+- Adressregister statt fertig benannter Planeten
+- unbekannte Planeten zeigen vor der Erkundung nur Code, Status und Gate-Adresse
+- Planeten erhalten ihren Einsatznamen erst nach bestätigter Expedition
+- Ausrüstungsslots vor Missionsstart
+- Startkapazität: 1 Modul
+- spätere Erweiterung auf 2 Module über Laborprojekt vorbereitet
+- Fundarchiv mit Kategorien
+- Fraktionsarchiv vorbereitet
+- Laborprojekte mit Ressourcen, Reliktfragmenten und Expeditionsdauer
+- erster Blocker auf PX-118: Tiefenzugang benötigt rekonstruiertes Schwellenrelikt
+- Dialogoptionen zeigen keine Risiko oder Belohnungsinformationen mehr
+- Scannerhinweise liefern Kontext, aber keine direkte Empfehlung
 
-## v0.5.3 Hotfix
-- Cache-Buster für sämtliche ES-Module
-- verhindert Mischbetrieb aus alten und neuen JavaScript-Dateien auf mobilen Browsern
+## Merker für spätere Builds
 
-## v0.5.3 Hotfix
-- Planetencodes auf einheitliches PX-Schema umgestellt
-- alte Spielstände mit P4X/N7C/K2M werden beim Laden migriert
+Nicht atembare Planeten sind vorgesehen. Dafür gibt es bereits die spätere Ausrüstungskategorie Umweltschutz, zum Beispiel Atmosphärenanzug. Solche Planeten sollen im Adressregister auftauchen, aber erst mit spezieller Ausrüstung betretbar sein.
 
-## v0.5.3
-- Sondenscan dauerhaft sichtbar und deutlich robuster
-- planetenspezifische Gate-Symbolfolgen statt immer gleicher Reihenfolge
-- PX-204 von Beginn an sichtbar, weitere Welten freischaltbar
-- Missionsstruktur auf mehrere Akte erweitert
-- längere Dialogphasen und zweite Entscheidungsebene
-- einfache Ressourcen und Bauplanfortschritte ergänzt
+Weitere spätere Systeme:
+
+- Fraktionswissen als Story-Treiber
+- Maschinenfraktion
+- fortgeschrittene Beobachter
+- Energie-Lebensformen
+- Basisangriffe nach Zufallswerten und Kampagnenfortschritt
+- Gefangenschaft oder Verlust eines Teammitglieds
+- Kontrollübernahme durch fremde Einflüsse
+- Zeit- und Dimensionsereignisse erst sehr spät

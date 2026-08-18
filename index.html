@@ -5,84 +5,116 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#071018">
 <title>Gate Command</title>
-<link rel="stylesheet" href="style.css?v=0.5.3">
+<link rel="stylesheet" href="style.css?v=0.5.4">
 </head>
 <body>
 <header>
   <div>
     <small>EXPEDITIONSKOMMANDO</small>
-    <div class="title-row"><h1>Gate Command</h1><span class="version-badge">v0.5.3</span></div>
+    <div class="title-row"><h1>Gate Command</h1><span class="version-badge">v0.5.4</span></div>
   </div>
   <div class="stats">
     <span>Energie <b id="energy">100</b></span>
     <span>Forschung <b id="research">0</b></span>
     <span>Material <b id="materials">0</b></span>
-    <span>Personal <b id="personnel">4</b></span>
+    <span>Slots <b id="slotsStat">1</b></span>
   </div>
 </header>
 
 <main>
 <section id="base" class="view active">
-  <small>BASIS</small><h2>Operationszentrale</h2>
+  <small>KOMMANDO-DASHBOARD</small>
+  <h2>Operationszentrale</h2>
   <article>
-    <small>AKTUELLER STATUS</small>
+    <small>AKTUELLE LAGE</small>
     <p id="baseStatus">Keine Expedition aktiv.</p>
-    <button id="prepare" class="primary">Expedition vorbereiten</button>
+    <button id="prepare" class="primary">Adressregister öffnen</button>
   </article>
-
+  <article>
+    <small>ADRESSREGISTER</small>
+    <div id="addressRegister"></div>
+  </article>
+  <article>
+    <small>OFFENE LABORPROJEKTE</small>
+    <div id="projectPreview"></div>
+  </article>
+  <article>
+    <small>LETZTE FUNDE</small>
+    <div id="findPreview"></div>
+  </article>
   <div class="grid">
-    <button data-view="team">Team</button>
-    <button data-view="lab">Forschung</button>
+    <button data-view="lab">Forschungslabor</button>
+    <button data-view="equipment">Ausrüstung</button>
+    <button data-view="finds">Fundarchiv</button>
+    <button data-view="factions">Fraktionen</button>
     <button data-view="archive">Einsatzarchiv</button>
+    <button data-view="team">Team</button>
   </div>
-
-  <article>
-    <small>BEKANNTE ZIELE</small>
-    <div id="knownWorlds"></div>
-  </article>
-
-  <article>
-    <small>BAUPLÄNE UND RESSOURCEN</small>
-    <div id="blueprints"></div>
-  </article>
-
-  <article>
-    <small>UNVOLLSTÄNDIGE INFORMATIONEN</small>
-    <div id="worldFlags">Noch keine besonderen Ereignisse protokolliert.</div>
-  </article>
-
   <button id="reset" class="danger">Spielstand zurücksetzen</button>
 </section>
 
-<section id="team" class="view">
-  <small>PERSONAL</small><h2>Einsatzteam GC-1</h2>
-  <div id="teamCards" class="team-grid"></div>
+<section id="equipment" class="view">
+  <small>AUSRÜSTUNG</small>
+  <h2>Inventar und Einsatzmodule</h2>
+  <article>
+    <p id="equipmentCapacityText"></p>
+    <p class="muted">Vor jeder Expedition kann nur eine begrenzte Anzahl Module mitgenommen werden. Später lässt sich die Kapazität durch Forschung erhöhen.</p>
+  </article>
+  <div id="equipmentArchive" class="module-list"></div>
   <button data-view="base">Zurück zur Basis</button>
 </section>
 
 <section id="lab" class="view">
-  <small>ENTWICKLUNG</small><h2>Forschung</h2>
+  <small>FORSCHUNGSLABOR</small>
+  <h2>Analyse und Rekonstruktion</h2>
   <article>
     <p class="big" id="labValue">0</p>
     <div class="bar"><i id="barFill"></i></div>
-    <p id="labText">Noch keine Analyse abgeschlossen.</p>
+    <p id="labText">Forschung wird für Laborprojekte und Ausrüstung benötigt.</p>
   </article>
   <article>
-    <small>AKTIVE ANALYSEN</small>
-    <div id="analysisList"></div>
+    <small>LABORPROJEKTE</small>
+    <div id="labProjects"></div>
   </article>
   <button data-view="base">Zurück zur Basis</button>
 </section>
 
+<section id="finds" class="view">
+  <small>DATENBANK</small>
+  <h2>Fundarchiv</h2>
+  <div id="findArchive"></div>
+  <button data-view="base">Zurück zur Basis</button>
+</section>
+
+<section id="factions" class="view">
+  <small>DATENBANK</small>
+  <h2>Fraktionsarchiv</h2>
+  <div id="factionArchive"></div>
+  <button data-view="base">Zurück zur Basis</button>
+</section>
+
+<section id="team" class="view">
+  <small>PERSONAL</small>
+  <h2>Einsatzteam GC-1</h2>
+  <div id="teamCards" class="team-grid"></div>
+  <button data-view="base">Zurück zur Basis</button>
+</section>
+
 <section id="archive" class="view">
-  <small>DATENBANK</small><h2>Einsatzarchiv</h2>
+  <small>DATENBANK</small>
+  <h2>Einsatzarchiv</h2>
   <div id="archiveList"></div>
   <button data-view="base">Zurück zur Basis</button>
 </section>
 
 <section id="gateView" class="view">
-  <small>MISSIONSVORBEREITUNG</small><h2>Gate-Raum</h2>
-  <article><small>ZIELAUSWAHL</small><div id="destinationList" class="destination-list"></div></article>
+  <small>MISSIONSVORBEREITUNG</small>
+  <h2>Gate-Raum</h2>
+
+  <article>
+    <small>ADRESSREGISTER</small>
+    <div id="destinationList" class="destination-list"></div>
+  </article>
 
   <div class="connection-panel">
     <div><small>VERBINDUNGSSTATUS</small><strong id="gateStatus">Gate inaktiv</strong></div>
@@ -105,26 +137,30 @@
     <article class="address-panel">
       <small>ZIELADRESSE</small>
       <h3 id="destinationCode">PX-761</h3>
-      <p id="destinationName" class="muted">Verlassene Tempelanlage</p>
-      <p class="muted mini">Die Adresse ist je Zielwelt unterschiedlich. Verriegle die Symbole in der angezeigten Reihenfolge.</p>
-      <div id="slots" class="slots"></div>
+      <p id="destinationName" class="muted">Unbekannte Zielwelt</p>
+      <p id="destinationStatus" class="muted mini">Status: Adresse stabil. Keine Einsatzdaten vorhanden.</p>
+      <div id="addressSlots" class="slots"></div>
       <button id="autoDial">Adresse automatisch anwählen</button>
     </article>
   </div>
 
   <article class="probe-card">
     <div class="probe-header">
-      <div><small>SONDENDATEN</small><p class="muted probe-subtitle">Visuelle Telemetrie und Oberflächenanalyse</p></div>
+      <div><small>SONDENDATEN</small><p class="muted probe-subtitle">Telemetrie vor Ausrüstungswahl</p></div>
       <span id="probeSignal" class="signal-label">KEIN SIGNAL</span>
     </div>
-
     <div id="probeVisual" class="probe-visual scan-off">
       <div class="scan-sky"></div><div class="scan-terrain"></div><div class="scan-structure"></div>
-      <div class="scan-object"></div><div class="scan-noise"></div><div class="scan-line"></div><div class="scan-corners"></div>
+      <div class="scan-object"></div><div class="scan-noise"></div><div class="scan-line"></div>
       <div class="scan-overlay"><span id="scanWorldCode">NO LINK</span><span id="scanQuality">DATA 0%</span></div>
     </div>
-
     <div id="probeData"><p>Noch keine Sondendaten vorhanden.</p></div>
+  </article>
+
+  <article>
+    <small>AUSRÜSTUNGSWAHL</small>
+    <p id="loadoutText" class="muted"></p>
+    <div id="loadoutList" class="module-list compact"></div>
   </article>
 
   <button id="probe">Sonde senden · 5 Energie</button>
@@ -135,7 +171,7 @@
 <section id="mission" class="view">
   <small>EXPEDITION <span id="missionNo"></span></small>
   <h2 id="planetName"></h2>
-  <div class="badges"><span id="phase">Erkundung</span><span id="risk">Risiko: unbekannt</span></div>
+  <div class="badges"><span id="phase">Erkundung</span><span id="statusBadge">Status: unbekannt</span></div>
   <article class="story">
     <h3 id="sceneTitle"></h3>
     <div id="story"></div>
@@ -144,7 +180,7 @@
   <button id="return" class="primary hidden">Zur Basis zurückkehren</button>
 </section>
 </main>
-<footer><span>Gate Command</span><span>Build v0.5.3</span></footer>
-<script type="module" src="app.js?v=0.5.3"></script>
+<footer><span>Gate Command</span><span>Build v0.5.4 · 2026-08-18 12:13</span></footer>
+<script type="module" src="app.js?v=0.5.4"></script>
 </body>
 </html>
