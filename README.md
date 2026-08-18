@@ -1,33 +1,23 @@
-# Gate Command v0.5.4
+# Gate Command v0.5.5
 
-System-Build.
+Fokus dieses Builds:
 
-## Schwerpunkt
+- Hauptseite aufgeräumt
+- Button umbenannt zu "Gate-Raum betreten"
+- keine komplette Adressliste mehr auf der Startseite
+- Adressauswahl im Gate-Raum als Dropdown
+- Sonde erst nach erfolgreicher Gate-Verbindung
+- Ausrüstungswahl erst nach Sondenscan sichtbar
+- Startausrüstung reduziert auf Scanner, Übersetzungsmodul und Medkit
+- Fraktionsarchiv ohne Spoiler, solange kein Kontakt stattgefunden hat
+- Laborprojekte nur sichtbar, wenn dafür echte Hinweise oder Funde vorliegen
+- Zweiter Ausrüstungsslot erst für sehr spätere Progression vorbereitet
+- Missionen auf PX-761 und PX-204 länger und mehrstufig aufgebaut
+- Stil stärker mit goldenen und pharaonisch anmutenden Akzenten versehen
 
-- Adressregister statt fertig benannter Planeten
-- unbekannte Planeten zeigen vor der Erkundung nur Code, Status und Gate-Adresse
-- Planeten erhalten ihren Einsatznamen erst nach bestätigter Expedition
-- Ausrüstungsslots vor Missionsstart
-- Startkapazität: 1 Modul
-- spätere Erweiterung auf 2 Module über Laborprojekt vorbereitet
-- Fundarchiv mit Kategorien
-- Fraktionsarchiv vorbereitet
-- Laborprojekte mit Ressourcen, Reliktfragmenten und Expeditionsdauer
-- erster Blocker auf PX-118: Tiefenzugang benötigt rekonstruiertes Schwellenrelikt
-- Dialogoptionen zeigen keine Risiko oder Belohnungsinformationen mehr
-- Scannerhinweise liefern Kontext, aber keine direkte Empfehlung
+Später vorgesehen:
 
-## Merker für spätere Builds
-
-Nicht atembare Planeten sind vorgesehen. Dafür gibt es bereits die spätere Ausrüstungskategorie Umweltschutz, zum Beispiel Atmosphärenanzug. Solche Planeten sollen im Adressregister auftauchen, aber erst mit spezieller Ausrüstung betretbar sein.
-
-Weitere spätere Systeme:
-
-- Fraktionswissen als Story-Treiber
-- Maschinenfraktion
-- fortgeschrittene Beobachter
-- Energie-Lebensformen
-- Basisangriffe nach Zufallswerten und Kampagnenfortschritt
-- Gefangenschaft oder Verlust eines Teammitglieds
-- Kontrollübernahme durch fremde Einflüsse
-- Zeit- und Dimensionsereignisse erst sehr spät
+- nicht atembare Planeten mit spezieller Ausrüstung
+- weitere Fraktionssysteme
+- noch tiefere Rätsel- und Episodenstruktur
+- Basisangriffe, Gefangenschaft und spätere Großereignisse

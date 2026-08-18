@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#071018">
+<meta name="theme-color" content="#081018">
 <title>Gate Command</title>
-<link rel="stylesheet" href="style.css?v=0.5.4">
+<link rel="stylesheet" href="style.css?v=0.5.5">
 </head>
 <body>
 <header>
   <div>
     <small>EXPEDITIONSKOMMANDO</small>
-    <div class="title-row"><h1>Gate Command</h1><span class="version-badge">v0.5.4</span></div>
+    <div class="title-row"><h1>Gate Command</h1><span class="version-badge">v0.5.5</span></div>
   </div>
   <div class="stats">
     <span>Energie <b id="energy">100</b></span>
@@ -25,23 +25,30 @@
 <section id="base" class="view active">
   <small>KOMMANDO-DASHBOARD</small>
   <h2>Operationszentrale</h2>
+
   <article>
     <small>AKTUELLE LAGE</small>
     <p id="baseStatus">Keine Expedition aktiv.</p>
-    <button id="prepare" class="primary">Adressregister öffnen</button>
+    <button id="prepare" class="primary">Gate-Raum betreten</button>
   </article>
-  <article>
-    <small>ADRESSREGISTER</small>
-    <div id="addressRegister"></div>
-  </article>
+
+  <div class="summary-grid">
+    <article class="summary-card"><small>ADRESSEN</small><p id="summaryAddresses" class="big small-big">0</p><p class="muted">im Register</p></article>
+    <article class="summary-card"><small>WELTEN</small><p id="summaryVisited" class="big small-big">0</p><p class="muted">erkundet</p></article>
+    <article class="summary-card"><small>FUNDE</small><p id="summaryFinds" class="big small-big">0</p><p class="muted">protokolliert</p></article>
+    <article class="summary-card"><small>PROJEKTE</small><p id="summaryProjects" class="big small-big">0</p><p class="muted">sichtbar</p></article>
+  </div>
+
   <article>
     <small>OFFENE LABORPROJEKTE</small>
-    <div id="projectPreview"></div>
+    <div id="projectPreview">Keine verwertbaren Baupläne.</div>
   </article>
+
   <article>
     <small>LETZTE FUNDE</small>
-    <div id="findPreview"></div>
+    <div id="findPreview">Noch keine Funde dokumentiert.</div>
   </article>
+
   <div class="grid">
     <button data-view="lab">Forschungslabor</button>
     <button data-view="equipment">Ausrüstung</button>
@@ -50,6 +57,7 @@
     <button data-view="archive">Einsatzarchiv</button>
     <button data-view="team">Team</button>
   </div>
+
   <button id="reset" class="danger">Spielstand zurücksetzen</button>
 </section>
 
@@ -57,8 +65,8 @@
   <small>AUSRÜSTUNG</small>
   <h2>Inventar und Einsatzmodule</h2>
   <article>
-    <p id="equipmentCapacityText"></p>
-    <p class="muted">Vor jeder Expedition kann nur eine begrenzte Anzahl Module mitgenommen werden. Später lässt sich die Kapazität durch Forschung erhöhen.</p>
+    <p id="equipmentCapacityText">Aktuelle Einsatzkapazität: 1 Modul.</p>
+    <p class="muted">Zu Beginn stehen nur wenige Module bereit. Weitere Ausrüstung wird über Funde, Baupläne und spätere Forschung freigeschaltet.</p>
   </article>
   <div id="equipmentArchive" class="module-list"></div>
   <button data-view="base">Zurück zur Basis</button>
@@ -70,11 +78,11 @@
   <article>
     <p class="big" id="labValue">0</p>
     <div class="bar"><i id="barFill"></i></div>
-    <p id="labText">Forschung wird für Laborprojekte und Ausrüstung benötigt.</p>
+    <p id="labText">Forschung wird für Laborprojekte und Rekonstruktionen benötigt.</p>
   </article>
   <article>
     <small>LABORPROJEKTE</small>
-    <div id="labProjects"></div>
+    <div id="labProjects">Keine verwertbaren Baupläne.</div>
   </article>
   <button data-view="base">Zurück zur Basis</button>
 </section>
@@ -112,8 +120,12 @@
   <h2>Gate-Raum</h2>
 
   <article>
-    <small>ADRESSREGISTER</small>
-    <div id="destinationList" class="destination-list"></div>
+    <small>ZIELADRESSE</small>
+    <div class="address-selector-row">
+      <select id="destinationSelect"></select>
+      <button id="refreshAddress" class="subtle">Auswahl zurücksetzen</button>
+    </div>
+    <div id="destinationMeta" class="address-meta"></div>
   </article>
 
   <div class="connection-panel">
@@ -135,7 +147,7 @@
     </div>
 
     <article class="address-panel">
-      <small>ZIELADRESSE</small>
+      <small>ANWAHL</small>
       <h3 id="destinationCode">PX-761</h3>
       <p id="destinationName" class="muted">Unbekannte Zielwelt</p>
       <p id="destinationStatus" class="muted mini">Status: Adresse stabil. Keine Einsatzdaten vorhanden.</p>
@@ -146,7 +158,7 @@
 
   <article class="probe-card">
     <div class="probe-header">
-      <div><small>SONDENDATEN</small><p class="muted probe-subtitle">Telemetrie vor Ausrüstungswahl</p></div>
+      <div><small>SONDENDATEN</small><p class="muted probe-subtitle">Telemetrie nach erfolgreicher Gate-Verbindung</p></div>
       <span id="probeSignal" class="signal-label">KEIN SIGNAL</span>
     </div>
     <div id="probeVisual" class="probe-visual scan-off">
@@ -154,16 +166,16 @@
       <div class="scan-object"></div><div class="scan-noise"></div><div class="scan-line"></div>
       <div class="scan-overlay"><span id="scanWorldCode">NO LINK</span><span id="scanQuality">DATA 0%</span></div>
     </div>
-    <div id="probeData"><p>Noch keine Sondendaten vorhanden.</p></div>
+    <div id="probeData"><p>Für Sondendaten muss zuerst eine stabile Gate-Verbindung aufgebaut werden.</p></div>
   </article>
 
-  <article>
+  <article id="loadoutPanel" class="hidden-block">
     <small>AUSRÜSTUNGSWAHL</small>
-    <p id="loadoutText" class="muted"></p>
+    <p id="loadoutText" class="muted">Ausrüstung erscheint nach dem Sondenscan.</p>
     <div id="loadoutList" class="module-list compact"></div>
   </article>
 
-  <button id="probe">Sonde senden · 5 Energie</button>
+  <button id="probe" disabled>Sonde senden · 5 Energie</button>
   <button id="start" class="primary" disabled>Expedition starten · 10 Energie</button>
   <button data-view="base">Vorbereitung abbrechen</button>
 </section>
@@ -180,7 +192,7 @@
   <button id="return" class="primary hidden">Zur Basis zurückkehren</button>
 </section>
 </main>
-<footer><span>Gate Command</span><span>Build v0.5.4 · 2026-08-18 12:13</span></footer>
-<script type="module" src="app.js?v=0.5.4"></script>
+<footer><span>Gate Command</span><span>Build v0.5.5 · 2026-08-18 19:35</span></footer>
+<script type="module" src="app.js?v=0.5.5"></script>
 </body>
 </html>

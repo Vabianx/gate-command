@@ -18,9 +18,9 @@ export const WORLDS=[
 export const EQUIPMENT=[
 {id:"scanner",name:"Tragbarer Feldscanner",category:"Scanner",description:"Erkennt verborgene Strukturen, Energiepfade und Anomalien in Ruinen oder unterirdischen Anlagen.",tags:["analyse","ruinen","energie"],unlocked:true},
 {id:"translator",name:"Xenolinguistisches Modul",category:"Übersetzung",description:"Verbessert die Deutung von Symbolen, Warnungen und diplomatischen Erstkontakten.",tags:["sprache","kultur","diplomatie"],unlocked:true},
-{id:"impulse_shield",name:"Mobiler Impulsschutz",category:"Schutz",description:"Schützt das Team bei instabilen Energiefeldern und alten Sicherheitsmechanismen.",tags:["energie","defensiv","fallen"],unlocked:true},
-{id:"breach_charge",name:"Präzisionsladung",category:"Zugang",description:"Öffnet blockierte Zugänge, kann aber empfindliche Funde beschädigen oder Aufmerksamkeit erzeugen.",tags:["zugang","sprengung","riskant"],unlocked:true},
 {id:"medkit",name:"Expeditions-Medkit",category:"Medizin",description:"Stabilisiert Verletzungen und kann Missionen nach Zwischenfällen verlängern.",tags:["medizin","team","notfall"],unlocked:true},
+{id:"impulse_shield",name:"Mobiler Impulsschutz",category:"Schutz",description:"Schützt das Team bei instabilen Energiefeldern und alten Sicherheitsmechanismen.",tags:["energie","defensiv","fallen"],unlocked:false},
+{id:"breach_charge",name:"Präzisionsladung",category:"Zugang",description:"Öffnet blockierte Zugänge, kann aber empfindliche Funde beschädigen oder Aufmerksamkeit erzeugen.",tags:["zugang","sprengung","riskant"],unlocked:false},
 {id:"env_suit",name:"Atmosphärenanzug",category:"Umweltschutz",description:"Ermöglicht später Expeditionen auf nicht atembaren oder toxischen Welten.",tags:["nicht-atembar","toxisch","später"],unlocked:false},
 {id:"gate_stabilizer",name:"Frequenzstabilisator",category:"Gate-Stabilisierung",description:"Ermöglicht später instabile Adressen und schwer erreichbare Welten.",tags:["gate","adresse","später"],unlocked:false}
 ];
@@ -29,7 +29,7 @@ export const FIND_CATEGORIES={relic_fragment:"Reliktfragment",artifact:"Artefakt
 
 export const FACTIONS={
 temple_guard:{name:"Imperiale Tempelkrieger",category:"Militärische Theokratie",known:0,description:"Bewaffnete Wächterkaste mit religiöser Symbolik und territorialem Verhalten."},
-star_covenant:{name:"Sternenbund",category:"Fortgeschrittene Beobachter",known:0,description:"Technologisch überlegene Fraktion mit zurückhaltender, möglicherweise diplomatischer Präsenz."},
+star_covenant:{name:"Sternenbund",category:"Fortgeschrittene Beobachter",known:0,description:"Technologisch überlegene Beobachter mit zurückhaltender, möglicherweise diplomatischer Präsenz."},
 machine_brood:{name:"Maschinenbrut",category:"Nichtbiologische Bedrohung",known:0,description:"Selbstorganisierende Maschinenmuster. Direkter Kontakt nicht empfohlen."},
 energy_mind:{name:"Energiebewusstsein",category:"Nichtkörperliche Lebensform",known:0,description:"Lebenszeichen und Energiesignatur sind nicht sauber trennbar."}
 };
